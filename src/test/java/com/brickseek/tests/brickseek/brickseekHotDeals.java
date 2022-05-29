@@ -1,0 +1,293 @@
+package com.brickseek.tests.brickseek;
+
+import com.brickseek.tests.Utility.ConfigurationReader;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class brickseekHotDeals {
+    public static void main(String[] args) throws InterruptedException {
+        int waitTime = 10;
+        int nPages = 7;
+        int percentCriteria = 70;
+        String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
+        String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
+        String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
+        String selectedCategoryPage="https://brickseek.com/deals/?sort=newest&categories%5B0%5D=3&categories%5B1%5D=4&categories%5B2%5D=7&categories%5B3%5D=15&categories%5B4%5D=5&categories%5B5%5D=9&categories%5B6%5D=10&categories%5B7%5D=8&categories%5B8%5D=13&categories%5B9%5D=14&categories%5B10%5D=16&categories%5B11%5D=17&categories%5B12%5D=18&categories%5B13%5D=19";
+        String selectedCategoryPage2="https://brickseek.com/deals/?sort=newest&categories%5B0%5D=3&categories%5B1%5D=4&categories%5B2%5D=7&categories%5B3%5D=15&categories%5B4%5D=5&categories%5B5%5D=9&categories%5B6%5D=10&categories%5B7%5D=8&categories%5B8%5D=13&categories%5B9%5D=14&categories%5B10%5D=16&categories%5B11%5D=17&categories%5B12%5D=18&categories%5B13%5D=19&pg=2";
+        String toPage = onlinePageNewest;
+        ArrayList<String> itemLinks = new ArrayList<>();
+        ArrayList<String> percentTexts = new ArrayList<>();
+        ArrayList<String> upcLists = new ArrayList<>();
+        ArrayList<String> hrefList = new ArrayList<>();
+        ArrayList<String> pricesList = new ArrayList<>();
+        ArrayList<String> rankList = new ArrayList<>();
+        ArrayList<Double> ebayPricesList = new ArrayList<>();
+        ArrayList<String> amazonPriceList = new ArrayList<>();
+        ArrayList<String> amazonPriceChartList = new ArrayList<>();
+        ArrayList<String> salesRankList = new ArrayList<>();
+
+
+
+
+
+
+        for (int k = 0; k < nPages; k++) {
+
+
+            WebDriverManager.chromedriver().setup();
+            WebDriver driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+
+            //login to Brickseek page
+
+            driver.get(toPage);
+            Thread.sleep(5000);
+
+            //finding Next Page web element
+
+            try {
+                WebElement nextPage = driver.findElement(By.xpath("//a[@class='pagination__next']"));
+                toPage = (nextPage.getAttribute("href"));
+            } catch (RuntimeException e){
+                k=nPages;
+                e.printStackTrace();
+            }
+
+            //Thread.sleep(3000);
+
+            //sendKeys(Keys.BACK_SPACE + "5"  + Keys.ENTER + Keys.ENTER);
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            //Thread.sleep(100000);
+            //finding deals items percents only
+            List<WebElement> dealsList = driver.findElements(By.xpath("//div[@class='item-list__discount-meter-bar-fill-text']"));
+            //finding deals View items
+            List<WebElement> dealsListClickable = driver.findElements(By.xpath("//a[.='View deal']"));
+
+            List<WebElement> dealsPrices = driver.findElements(By.xpath("//div[@class='item-list__discount-meter-bar-fill-text']/../../../..//div//div[contains(@class, 'price-column item')]"));
+
+            //loop to convert percent to int and then adding href link of that item and name of it to two separate Arraylists
+
+            int i = 0;
+            String itemLink = "";
+            for (WebElement each : dealsList) {
+                //driver.navigate().to("https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Flocalhost%3A4080%2Fd");
+                //driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+
+                //String strPercent= each.getText().substring(0, 2);
+                //int intPercent = Integer.parseInt(each.getText().substring(0, 2));
+
+                int intPercent = Integer.parseInt(each.getText().substring(0, each.getText().indexOf('%')));
+                String hReflink = "";
+
+
+
+                if (intPercent >= percentCriteria) {
+                    hReflink= dealsListClickable.get(i).getAttribute("href");
+
+                    hrefList.add(hReflink);
+
+
+                    itemLinks.add(hReflink);
+
+                    String price = dealsPrices.get(i).getText();
+                    String iprice = price.substring(1, (price.indexOf('.'))-1);
+                    String dprice = price.substring((price.indexOf('.')+2), (price.indexOf('.'))+4);
+                    price = '$' + iprice + '.' + dprice;
+                    pricesList.add(price);
+                    System.out.println(price);
+
+                    //adding upc
+                    //pc upc1 = new upc();
+                    //upcLists.add(upc1.upcFind(hReflink));
+
+                    //driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+
+                    percentTexts.add(each.getText());
+
+                    System.out.println(percentTexts.size());
+                    //System.out.println(itemLink);
+
+                }
+
+                i++;
+            }
+            driver.quit();
+
+            for (int i1 = 0; i1<itemLinks.size(); i1++) {
+                //adding upc
+                //upcFind("https://brickseek.com/deal/swift-home-microfiber-solid-sheet/585259");
+                //upcFind("https://brickseek.com/deal/fossil-women-s-42mm-charter-stainless/585280");
+
+
+                String upcHref = itemLinks.get(i1);
+
+                //upcFind(upcHref);
+
+                try {
+
+                    String[] arrayStr = upc.upcFind(upcHref);
+                    upcLists.add(arrayStr[0]);
+                    rankList.add(arrayStr[1]);
+                }catch (RuntimeException e) {
+                    upcLists.add("N/A");
+                    rankList.add("N/A");
+                    driver.quit();
+                    e.printStackTrace();
+                }
+
+                //driver.quit();
+
+            }
+
+            for (int i2 = 0; i2 < upcLists.size(); i2++) {
+
+                String upcString = upcLists.get(i2);
+                Double ePrice = EbaySold.ebayLink(upcString);
+                ebayPricesList.add(ePrice);
+
+
+            }
+            //System.out.println("upcs");
+            //System.out.println(upcLists);
+            //System.out.println("______________");
+
+            for (int i3 = 0; i3 < upcLists.size(); i3++) {
+                String upcString = upcLists.get(i3);
+                String ePrice = AmazonPriceTrack.amazonPrice(upcString);
+                amazonPriceList.add(ePrice);
+
+                //adding also PriceChart
+                String [] strArr = AmazonPriceTrack.priceChart2(upcString);
+                String priceChartHref = strArr[0];
+                amazonPriceChartList.add(priceChartHref);
+
+                //adding also salesRank in Category
+                String salesRank = strArr[1];
+                salesRankList.add(salesRank);
+
+
+            }
+
+
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+
+
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+
+            //login to yahoo mail and enter username and password
+
+
+
+            driver.navigate().to("https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Flocalhost%3A4080%2Fd");
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            WebElement mailMousePointer = driver.findElement(By.name("username"));
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            mailMousePointer.sendKeys(ConfigurationReader.getProperty("username") + Keys.ENTER);
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            driver.findElement(By.id("login-passwd")).sendKeys(ConfigurationReader.getProperty("password") + Keys.ENTER);
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            driver.findElement(By.linkText("Compose")).click();
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+            driver.findElement(By.id("message-to-field")).sendKeys("mrtshnmetu@yahoo.com" + Keys.ENTER);
+            driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
+
+
+            //System.out.println("itemLinks = " + itemLinks.size());
+            for (int j1 = 0; j1 < itemLinks.size(); j1++) {
+
+                driver.findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys("____________________________________________"
+                        + Keys.ENTER +itemLinks.get(j1) + Keys.ENTER);
+                Thread.sleep(3000);
+                driver.findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys(" Page " + k + Keys.ENTER
+                        + percentTexts.get(j1) + Keys.ENTER
+                        + upcLists.get(j1) + Keys.ENTER
+                        + "price " + pricesList.get(j1) +Keys.ENTER
+                        + rankList.get(j1) + Keys.ENTER
+                        + salesRankList.get(j1) + Keys.ENTER
+                        + "Ebay Ave Price  " + ebayPricesList.get(j1)+ Keys.ENTER
+                        +  amazonPriceList.get(j1)+ Keys.ENTER
+                        +  amazonPriceChartList.get(j1)+Keys.SPACE +Keys.ENTER
+                        +"__________________________________________________"
+                        + Keys.ENTER+ Keys.ENTER+ Keys.ENTER+ Keys.ENTER);
+            }
+
+            driver.findElement(By.xpath("//*[@id=\"mail-app-component\"]/div/div/div[1]/div[3]/div/div/input")).sendKeys("deal page" + k);
+
+
+            driver.findElement(By.xpath("//*[@id=\"mail-app-component\"]/div/div/div[2]/div[2]/div/button/span")).click();
+            i=0;
+            itemLinks.clear();
+            percentTexts.clear();
+            dealsList.clear();
+            dealsListClickable.clear();
+            upcLists.clear();
+            pricesList.clear();
+            rankList.clear();
+            ebayPricesList.clear();
+            amazonPriceList.clear();
+            amazonPriceChartList.clear();
+            salesRankList.clear();
+            driver.close();
+
+
+        }
+    }
+
+
+    public  static String[] upcFind (String itemLink) {
+
+        String output[] = new String[2];
+
+        WebDriverManager.chromedriver().setup();
+
+        WebDriver driverObj = new ChromeDriver();
+        driverObj.manage().window().maximize();
+        driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        System.out.println(itemLink);
+        driverObj.navigate().to(itemLink);
+
+        //driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        String updatedUrl = driverObj.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div[2]/div[3]/div/a[2]")).getAttribute("href");
+        driverObj.close();
+        //System.out.println(updatedUrl);
+        driverObj = new ChromeDriver();
+        //driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        driverObj.manage().window().maximize();
+        driverObj.navigate().to(updatedUrl);
+        driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        //String UPCText = driverObj.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div[2]/div[1]/div/div[3]")).getText();
+        //div[@class='item-overview__meta-item']
+        String rankingText = "Ranking:  " + driverObj.findElement(By.xpath("//div[@class='item-overview__meta-item']")).getText();
+        if (rankingText.contains("MSRP") || rankingText.contains("UPC")) {
+            rankingText="No Ranking";
+        }
+        System.out.println(rankingText);
+        String UPCText = driverObj.findElement(By.xpath("//*[contains(text(),'View barcode')]/../..")).getText();
+
+        UPCText = UPCText.substring(5);
+        UPCText = UPCText.substring(0,UPCText.indexOf(' '));
+        output[0]=UPCText;
+        output [1] = rankingText;
+        System.out.println(UPCText);
+        driverObj.quit();
+        return output;
+    }
+
+
+
+
+
+
+}
