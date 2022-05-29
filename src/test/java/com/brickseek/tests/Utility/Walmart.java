@@ -31,7 +31,7 @@ public class Walmart {
         ArrayList<String> salesRank = new ArrayList<>();
 
         int waitTime = 10;
-        int numberofDeals = 10;
+        int numberofDeals = 30;
         int group = 1;
 
 
