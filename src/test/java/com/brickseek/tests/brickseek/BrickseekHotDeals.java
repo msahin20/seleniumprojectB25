@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class brickseekHotDeals {
+public class BrickseekHotDeals {
     public static void main(String[] args) throws InterruptedException {
         int waitTime = 10;
-        int nPages = 7;
-        int percentCriteria = 70;
+        int nPages = 2;
+        int percentCriteria = 69;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -221,10 +221,10 @@ public class brickseekHotDeals {
                         + Keys.ENTER+ Keys.ENTER+ Keys.ENTER+ Keys.ENTER);
             }
 
-            driver.findElement(By.xpath("//*[@id=\"mail-app-component\"]/div/div/div[1]/div[3]/div/div/input")).sendKeys("deal page" + k);
+            driver.findElement(By.xpath("//input[@class='q_T y_Z2hYGcu je_0 jb_0 X_0 N_fq7 G_e A_6EqO C_Z281SGl ir_0 P_0 bj3_Z281SGl b_0 j_n d_72FG em_N']")).sendKeys("deal page" + k);
 
 
-            driver.findElement(By.xpath("//*[@id=\"mail-app-component\"]/div/div/div[2]/div[2]/div/button/span")).click();
+            driver.findElement(By.xpath("//button[.='Send']")).click();
             i=0;
             itemLinks.clear();
             percentTexts.clear();
@@ -237,7 +237,7 @@ public class brickseekHotDeals {
             amazonPriceList.clear();
             amazonPriceChartList.clear();
             salesRankList.clear();
-            driver.close();
+
 
 
         }
