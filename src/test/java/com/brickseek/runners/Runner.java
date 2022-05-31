@@ -1,6 +1,6 @@
-package com.brickseek.tests.runners;
+package com.brickseek.runners;
 
-import com.brickseek.tests.brickseek.BrickseekHotDeals;
+import com.brickseek.brickseek.BrickseekHotDeals;
 import org.junit.Assert;
 import org.junit.Test;
 

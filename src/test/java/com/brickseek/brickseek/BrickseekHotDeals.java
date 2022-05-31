@@ -1,6 +1,6 @@
-package com.brickseek.tests.brickseek;
+package com.brickseek.brickseek;
 
-import com.brickseek.tests.Utility.ConfigurationReader;
+import com.brickseek.Utility.ConfigurationReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

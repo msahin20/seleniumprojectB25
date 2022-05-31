@@ -1,7 +1,7 @@
-package com.brickseek.tests.Utility;
+package com.brickseek.Utility;
 
-import com.brickseek.tests.brickseek.AmazonPriceTrack;
-import com.brickseek.tests.brickseek.EbaySold;
+import com.brickseek.brickseek.AmazonPriceTrack;
+import com.brickseek.brickseek.EbaySold;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

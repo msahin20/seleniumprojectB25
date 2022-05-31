@@ -1,4 +1,4 @@
-package com.brickseek.tests.Utility;
+package com.brickseek.Utility;
 
 import java.io.FileInputStream;
 import java.io.IOException;
