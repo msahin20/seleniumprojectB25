@@ -23,10 +23,10 @@ public class StepDef {
 
     @Then("I should see the results")
     public void i_should_see_the_results() throws InterruptedException {
-        for (int i = 0; i <100 ; i++) {
+        for (int i = 0; i <2 ; i++) {
             System.out.println("Hello: " + i);
             Thread.sleep(1500);
-            System.out.println("Hello");
+            
 
         }
 
