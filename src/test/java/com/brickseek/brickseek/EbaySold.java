@@ -1,5 +1,6 @@
 package com.brickseek.brickseek;
 
+import com.brickseek.Utility.Driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,27 +21,27 @@ public class EbaySold {
 
         Double avePrice = 0.00;
 
-        WebDriverManager.chromedriver().setup();
-
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        WebDriverManager.chromedriver().setup();
+//
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 
         //driver.navigate().to("https://www.ebay.com");
         //driver.findElement(By.xpath("//*[@id=\"gh-ug\"]/a")).click();
 
-        driver.navigate().to("https://www.ebay.com/");
+        Driver.getDriver().get("https://www.ebay.com/");
 
         try {
 
 
 
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            WebElement searchInput = driver.findElement(By.xpath("//*[@id=\"gh-ac\"]"));
+            Thread.sleep(1000);
+            WebElement searchInput = Driver.getDriver().findElement(By.xpath("//*[@id=\"gh-ac\"]"));
             searchInput.sendKeys(upc + Keys.ENTER);
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            List<WebElement> elementList = driver.findElements(By.xpath("//ul[@class='srp-results srp-list clearfix']//span[@class='s-item__price']"));
+            Thread.sleep(1000);
+            List<WebElement> elementList = Driver.getDriver().findElements(By.xpath("//ul[@class='srp-results srp-list clearfix']//span[@class='s-item__price']"));
             ArrayList<Double> ebayprices = new ArrayList<>();
             Double sum = 0.00;
             int count = 0;
@@ -87,14 +88,14 @@ public class EbaySold {
 
             //double str1 = Double.parseDouble(str);
 
-            String updatedUrl = driver.getCurrentUrl();
+            String updatedUrl = Driver.getDriver().getCurrentUrl();
             //System.out.println(updatedUrl);
             //driver.quit();
         } catch (RuntimeException e){
 
             e.printStackTrace();
         }
-        driver.quit();
+        Driver.closeDriver();
 
         return avePrice;
         //driver.quit();
