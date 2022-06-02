@@ -45,7 +45,7 @@ public class Driver {
                 switch statement will determine the case, and open the matching browser
             */
             switch (browserType) {
-                case "chrome":
+                case "chromeNoimage":
                     WebDriverManager.chromedriver().setup();
 
                     //System.setProperty("webdriver.chrome.driver", "C:\\Users\\ghs6kor\\Desktop\\Java\\chromedriver.exe");
@@ -72,6 +72,12 @@ public class Driver {
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
+                    driver.manage().window().maximize();
+                    //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+                    break;
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    driver = new ChromeDriver();
                     driver.manage().window().maximize();
                     //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                     break;

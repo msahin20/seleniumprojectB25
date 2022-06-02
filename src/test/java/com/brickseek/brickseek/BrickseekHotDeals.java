@@ -17,7 +17,7 @@ public class BrickseekHotDeals {
     public static void main3(String[] args) throws InterruptedException {
         int waitTime = 10;
         int nPages = 1;
-        int percentCriteria = 99;
+        int percentCriteria = 79;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
