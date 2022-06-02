@@ -3,8 +3,12 @@ package com.brickseek.Utility;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
@@ -43,8 +47,26 @@ public class Driver {
             switch (browserType) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
+
+                    //System.setProperty("webdriver.chrome.driver", "C:\\Users\\ghs6kor\\Desktop\\Java\\chromedriver.exe");
+                    Map <String, Object> prefs = new HashMap<String, Object>();
+                    // browser setting to disable image
+                    prefs.put("profile.managed_default_content_settings.images", 2);
+                    //adding capabilities to browser
+                    ChromeOptions op = new ChromeOptions();
+                    op.setExperimentalOption("prefs", prefs);
+                    // putting desired capabilities to browser
+                    WebDriverManager.chromedriver().setup();
+                    driver= new ChromeDriver(op);
                     driver.manage().window().maximize();
+
+
+
+
+//                    WebDriverManager.chromedriver().setup();
+////
+//                    driver = new ChromeDriver();
+//                    driver.manage().window().maximize();
                     //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                     break;
                 case "firefox":
