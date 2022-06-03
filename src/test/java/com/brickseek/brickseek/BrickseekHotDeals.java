@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class BrickseekHotDeals {
     public static void main3(String[] args) throws InterruptedException {
         int waitTime = 10;
-        int nPages = 1;
-        int percentCriteria = 79;
+        int nPages = 5;
+        int percentCriteria = 101;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -247,7 +247,7 @@ public class BrickseekHotDeals {
     public static void main(String[] args) throws InterruptedException {
         int waitTime = 10;
         int nPages = 2;
-        int percentCriteria = 69;
+        int percentCriteria = 79;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -390,8 +390,8 @@ public class BrickseekHotDeals {
 
             for (int i3 = 0; i3 < upcLists.size(); i3++) {
                 String upcString = upcLists.get(i3);
-                String ePrice = AmazonPriceTrack.amazonPrice(upcString);
-                amazonPriceList.add(ePrice);
+//                String ePrice = AmazonPriceTrack.amazonPrice(upcString);
+//                amazonPriceList.add(ePrice);
 
                 //adding also PriceChart
                 String [] strArr = AmazonPriceTrack.priceChart2(upcString);
@@ -443,7 +443,7 @@ public class BrickseekHotDeals {
                         + rankList.get(j1) + Keys.ENTER
                         + salesRankList.get(j1) + Keys.ENTER
                         + "Ebay Ave Price  " + ebayPricesList.get(j1)+ Keys.ENTER
-                        +  amazonPriceList.get(j1)+ Keys.ENTER
+                        //+  amazonPriceList.get(j1)+ Keys.ENTER
                         +  amazonPriceChartList.get(j1)+Keys.SPACE +Keys.ENTER
                         +"__________________________________________________"
                         + Keys.ENTER+ Keys.ENTER+ Keys.ENTER+ Keys.ENTER);
