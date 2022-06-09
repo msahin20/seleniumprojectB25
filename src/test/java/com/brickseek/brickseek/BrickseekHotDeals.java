@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class BrickseekHotDeals {
@@ -246,8 +248,8 @@ public class BrickseekHotDeals {
 
     public static void main(String[] args) throws InterruptedException {
         int waitTime = 10;
-        int nPages = 3;
-        int percentCriteria = 69;
+        int nPages = 5;
+        int percentCriteria = 59;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -278,7 +280,7 @@ public class BrickseekHotDeals {
             //login to Brickseek page
             Driver.getDriver().get(toPage);
 
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
 
             //finding Next Page web element
 
@@ -376,14 +378,41 @@ public class BrickseekHotDeals {
 
             }
 
-            for (int i2 = 0; i2 < upcLists.size(); i2++) {
 
-                String upcString = upcLists.get(i2);
-                Double ePrice = EbaySold.ebayLink(upcString);
-                ebayPricesList.add(ePrice);
+            for (int i1 = 0; i1<itemLinks.size(); i1++) {
 
+                if(!(upcLists.get(i1).equals("N/A"))){
+                    continue;
+                }else {
+
+
+                    //adding upc
+                    //upcFind("https://brickseek.com/deal/swift-home-microfiber-solid-sheet/585259");
+                    //upcFind("https://brickseek.com/deal/fossil-women-s-42mm-charter-stainless/585280");
+
+
+                    String upcHref = itemLinks.get(i1);
+
+                    //upcFind(upcHref);
+
+//                try {
+
+                    String[] arrayStr = upc.upcFind2(upcHref);
+                    upcLists.set(i1, arrayStr[0]);
+                    rankList.set(i1,arrayStr[1]);
+//                }catch (RuntimeException e) {
+//                    upcLists.add("N/A");
+//                    rankList.add("N/A");
+//                    Driver.closeDriver();
+//                    e.printStackTrace();
+//                }
+
+                    //driver.quit();
+                }
 
             }
+
+
             //System.out.println("upcs");
             //System.out.println(upcLists);
             //System.out.println("______________");
@@ -405,6 +434,92 @@ public class BrickseekHotDeals {
 
             }
 
+            for (int i2 = 0; i2 < upcLists.size(); i2++) {
+
+                String upcString = upcLists.get(i2);
+                Double ePrice = EbaySold.ebayLink(upcString);
+                ebayPricesList.add(ePrice);
+
+
+            }
+            List<Map<String, String>> mapList = new ArrayList<>();
+            for (int j1 = 0; j1 < itemLinks.size(); j1++) {
+                Map<String, String> map = new LinkedHashMap<>();
+                map.put("ItemLink", itemLinks.get(j1));
+                map.put("PercentOff", percentTexts.get(j1));
+                map.put("Upc", upcLists.get(j1));
+                map.put("Price", pricesList.get(j1));
+                map.put("Ranking", rankList.get(j1));
+                map.put("SalesRank", salesRankList.get(j1));
+                map.put("EbayAvePrice", (ebayPricesList.get(j1).toString()));
+                map.put("AmazonPriceChart", amazonPriceChartList.get(j1));
+
+
+                mapList.add(map);
+            }
+            int y = 0;
+            for (Map<String, String> eachMap : mapList) {
+
+                    if (eachMap.get("AmazonPriceChart").equals("N/A")&&(!eachMap.get("Upc").equals("N/A"))) {
+                        System.out.println("eachMap.get(\"Upc\")  = " + eachMap.get("Upc"));
+                        String[] strArr2 = AmazonPriceTrack.priceChart3(eachMap.get("Upc"));
+                        String priceChartHref2 = strArr2[0];
+                        System.out.println("eachMap.get(\"AmazonPriceChart\") (before update) = " + eachMap.get("AmazonPriceChart"));
+                        eachMap.put("AmazonPriceChart", priceChartHref2);
+                        System.out.println(eachMap.get("AmazonPriceChart"));
+                        amazonPriceChartList.set(y, priceChartHref2);
+
+
+
+                    }
+
+
+
+                y++;
+
+            }
+            y = 0;
+            for (Map<String, String> eachMap : mapList) {
+
+                if (eachMap.get("AmazonPriceChart").equals("N/A")) {
+                    System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
+                    String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
+                    String priceChartHref2 = strArr2[0];
+                    eachMap.put("Upc", priceChartHref2);
+                    amazonPriceChartList.set(y, priceChartHref2);
+
+
+                }
+
+
+
+                y++;
+
+            }
+
+            y = 0;
+            for (Map<String, String> eachMap : mapList) {
+
+                if (eachMap.get("AmazonPriceChart").equals("N/A")) {
+                    System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
+                    String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
+                    String priceChartHref2 = strArr2[0];
+                    eachMap.put("Upc", priceChartHref2);
+                    amazonPriceChartList.set(y, priceChartHref2);
+
+
+                }
+
+
+
+                y++;
+
+            }
+
+
+
+
+
 
 //            driver = new ChromeDriver();
 //            driver.manage().window().maximize();
@@ -415,44 +530,54 @@ public class BrickseekHotDeals {
             //login to yahoo mail and enter username and password
 
 
-
-            Driver.getDriver().get("https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Flocalhost%3A4080%2Fd");
-
-            WebElement mailMousePointer = Driver.getDriver().findElement(By.name("username"));
-            Thread.sleep(1000);
-            mailMousePointer.sendKeys(ConfigurationReader.getProperty("username") + Keys.ENTER);
-            Thread.sleep(1000);
-            Driver.getDriver().findElement(By.id("login-passwd")).sendKeys(ConfigurationReader.getProperty("password") + Keys.ENTER);
-            Thread.sleep(1000);
-            Driver.getDriver().findElement(By.linkText("Compose")).click();
-            Thread.sleep(1000);
-            Driver.getDriver().findElement(By.id("message-to-field")).sendKeys("mrtshnmetu@yahoo.com" + Keys.ENTER);
-            Thread.sleep(1000);
+try {
 
 
-            //System.out.println("itemLinks = " + itemLinks.size());
-            for (int j1 = 0; j1 < itemLinks.size(); j1++) {
+    Driver.getDriver().get("https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Flocalhost%3A4080%2Fd");
 
-                Driver.getDriver().findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys("____________________________________________"
-                        + Keys.ENTER +itemLinks.get(j1) + Keys.ENTER);
-                Thread.sleep(2000);
-                Driver.getDriver().findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys(" Page " + k + Keys.ENTER
-                        + percentTexts.get(j1) + Keys.ENTER
-                        + upcLists.get(j1) + Keys.ENTER
-                        + "price " + pricesList.get(j1) +Keys.ENTER
-                        + rankList.get(j1) + Keys.ENTER
-                        + salesRankList.get(j1) + Keys.ENTER
-                        + "Ebay Ave Price  " + ebayPricesList.get(j1)+ Keys.ENTER
-                        //+  amazonPriceList.get(j1)+ Keys.ENTER
-                        +  amazonPriceChartList.get(j1)+Keys.SPACE +Keys.ENTER
-                        +"__________________________________________________"
-                        + Keys.ENTER+ Keys.ENTER+ Keys.ENTER+ Keys.ENTER);
-            }
+    WebElement mailMousePointer = Driver.getDriver().findElement(By.name("username"));
+    Thread.sleep(1000);
+    mailMousePointer.sendKeys(ConfigurationReader.getProperty("username") + Keys.ENTER);
+    Thread.sleep(1000);
+    Driver.getDriver().findElement(By.id("login-passwd")).sendKeys(ConfigurationReader.getProperty("password") + Keys.ENTER);
+    Thread.sleep(2500);
+    Driver.getDriver().findElement(By.linkText("Compose")).click();
+    Thread.sleep(2500);
+    Driver.getDriver().findElement(By.xpath("//input[@id='message-to-field']")).sendKeys("mrtshnmetu@yahoo.com" + Keys.ENTER);
+    Thread.sleep(1000);
 
-            Driver.getDriver().findElement(By.xpath("//input[@class='q_T y_Z2hYGcu je_0 jb_0 X_0 N_fq7 G_e A_6EqO C_Z281SGl ir_0 P_0 bj3_Z281SGl b_0 j_n d_72FG em_N']")).sendKeys("deal page" + k);
 
-            Driver.getDriver().findElement(By.xpath("//button[.='Send']")).click();
-            Driver.closeDriver();
+    for (int j1 = 0; j1 < itemLinks.size(); j1++) {
+
+        //System.out.println("itemLinks = " + itemLinks.size());
+
+
+        Driver.getDriver().findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys("____________________________________________"
+                + Keys.ENTER + itemLinks.get(j1) + Keys.ENTER);
+        Thread.sleep(2000);
+        Driver.getDriver().findElement(By.xpath("//*[@id=\"editor-container\"]/div[1]/div[1]")).sendKeys(" Page " + k + Keys.ENTER
+                + percentTexts.get(j1) + Keys.ENTER
+                + upcLists.get(j1) + Keys.ENTER
+                + "price " + pricesList.get(j1) + Keys.ENTER
+                + rankList.get(j1) + Keys.ENTER
+                + salesRankList.get(j1) + Keys.ENTER
+                + "Ebay Ave Price  " + ebayPricesList.get(j1) + Keys.ENTER
+                //+  amazonPriceList.get(j1)+ Keys.ENTER
+                + amazonPriceChartList.get(j1) + Keys.SPACE + Keys.ENTER
+                + "__________________________________________________"
+                + Keys.ENTER + Keys.ENTER + Keys.ENTER + Keys.ENTER);
+    }
+
+    Driver.getDriver().findElement(By.xpath("//input[@class='q_T y_Z2hYGcu je_0 jb_0 X_0 N_fq7 G_e A_6EqO C_Z281SGl ir_0 P_0 bj3_Z281SGl b_0 j_n d_72FG em_N']")).sendKeys("deal page" + k);
+
+    Driver.getDriver().findElement(By.xpath("//button[.='Send']")).click();
+    Driver.closeDriver();
+} catch (RuntimeException e){
+    System.out.println("mapList = " + mapList);
+    e.printStackTrace();
+}
+
+
             i=0;
             itemLinks.clear();
             percentTexts.clear();
@@ -465,6 +590,7 @@ public class BrickseekHotDeals {
             amazonPriceList.clear();
             amazonPriceChartList.clear();
             salesRankList.clear();
+            mapList.clear();
 
 
 

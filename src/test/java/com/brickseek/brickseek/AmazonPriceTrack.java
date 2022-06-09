@@ -7,6 +7,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class AmazonPriceTrack {
 
     public static void main(String[] args) throws InterruptedException {
         //System.out.println( amazonPrice("889842519099"));
-        System.out.println(priceChart2("050743617973")[0]);
+        System.out.println(priceChart3("889842519099")[0]);
         //System.out.println(priceChart2("070330682719")[1]);
     }
 
@@ -92,7 +94,7 @@ public class AmazonPriceTrack {
             //driver.navigate().to("https://www.ebay.com");
             //driver.findElement(By.xpath("//*[@id=\"gh-ug\"]/a")).click();
 
-            Driver.getDriver().get("https://www.camelcamelcamel.com//");
+            Driver.getDriver().get("https://www.camelcamelcamel.com/");
             Thread.sleep(1000);
             WebElement searchInput = Driver.getDriver().findElement(By.xpath("//input[@class='input-group-field has-tip']"));
             searchInput.sendKeys(upc + Keys.ENTER);
@@ -105,6 +107,36 @@ public class AmazonPriceTrack {
         catch(RuntimeException e) {
             Driver.closeDriver();
             e.printStackTrace();
+        }
+
+        if (priceChartHref.contains("N/A")){
+            try {
+
+                WebDriverManager.edgedriver().setup();
+
+                WebDriver driver = new EdgeDriver();
+                driver.manage().window().maximize();
+
+
+
+                //driver.navigate().to("https://www.ebay.com");
+                //driver.findElement(By.xpath("//*[@id=\"gh-ug\"]/a")).click();
+
+                driver.get("https://www.camelcamelcamel.com/");
+                Thread.sleep(1000);
+                WebElement searchInput = driver.findElement(By.xpath("//input[@class='input-group-field has-tip']"));
+                searchInput.sendKeys(upc + Keys.ENTER);
+                Thread.sleep(1000);
+                WebElement priceChart = driver.findElement(By.xpath("//img[@id='summary_chart']"));
+                priceChartHref = priceChart.getAttribute("src");
+                driver.close();
+
+            }
+            catch(RuntimeException e) {
+
+                e.printStackTrace();
+            }
+
         }
 
 
@@ -127,7 +159,7 @@ public class AmazonPriceTrack {
 //
 //        WebDriver driver = new ChromeDriver();
 //        driver.manage().window().maximize();
-        Driver.getDriver().get("https://www.camelcamelcamel.com//");
+        Driver.getDriver().get("https://www.camelcamelcamel.com/");
         try {
 
 
@@ -139,6 +171,12 @@ public class AmazonPriceTrack {
             WebElement searchInput = Driver.getDriver().findElement(By.xpath("//input[@class='input-group-field has-tip']"));
             searchInput.sendKeys(upc + Keys.ENTER);
             //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            try {
+                Driver.getDriver().findElement(By.xpath("//*[@id=\"content\"]//p[contains(text(),'Sorry, we didn')]"));
+                output[0] ="Not found";
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
 
             try {
                 WebElement priceChart = Driver.getDriver().findElement(By.xpath("//img[@id='summary_chart']"));
@@ -179,6 +217,67 @@ public class AmazonPriceTrack {
             e.printStackTrace();
         }
         Driver.closeDriver();
+        System.out.println("priceChartHref " + output[0]);
+        System.out.println("salesRank "+ output[1]);
+
+
+
+        return output;
+
+
+
+    }
+
+    public static String[] priceChart3(String upc) throws InterruptedException {
+        String priceChartHref ="N/A";
+        String salesRank = "N/A";
+        String[] output = {priceChartHref, salesRank};
+        WebDriverManager.firefoxdriver().setup();
+
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("https://www.camelcamelcamel.com/");
+        try {
+
+
+            //driver.navigate().to("https://www.ebay.com");
+            //driver.findElement(By.xpath("//*[@id=\"gh-ug\"]/a")).click();
+
+//            driver.navigate().to("https://www.camelcamelcamel.com//");
+//            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            WebElement searchInput = driver.findElement(By.xpath("//input[@class='input-group-field has-tip']"));
+            searchInput.sendKeys(upc + Keys.ENTER);
+            Thread.sleep(2500);
+            //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            try {
+                driver.findElement(By.xpath("//*[@id=\"content\"]//p[contains(text(),'Sorry, we didn')]"));
+                output[0] ="Not found";
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                WebElement priceChart = driver.findElement(By.xpath("//img[@id='summary_chart']"));
+                priceChartHref = priceChart.getAttribute("src");
+                output[0]=priceChartHref;
+                salesRank = driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[1]")).getText() + ": "
+                        + driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[2]")).getText()
+                        + " in "+ driver.findElement(By.xpath("//table[@class='product_fields']//tr[2]//td[2]")).getText();
+                output[1]= salesRank;
+                //System.out.println("priceChartHref " + output[0]);
+                //System.out.println("salesRank "+ output[1]);
+                //driver.quit();
+            } catch (RuntimeException e){
+                e.printStackTrace();
+            }
+
+
+        }
+        catch(RuntimeException e) {
+            //driver.quit();
+            e.printStackTrace();
+        }
+        driver.close();
         System.out.println("priceChartHref " + output[0]);
         System.out.println("salesRank "+ output[1]);
 
