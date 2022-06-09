@@ -232,12 +232,14 @@ public class AmazonPriceTrack {
         String priceChartHref ="N/A";
         String salesRank = "N/A";
         String[] output = {priceChartHref, salesRank};
-        WebDriverManager.firefoxdriver().setup();
+        WebDriver driver=null;
 
-        WebDriver driver = new FirefoxDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.camelcamelcamel.com/");
         try {
+            WebDriverManager.firefoxdriver().setup();
+
+            driver = new FirefoxDriver();
+            driver.manage().window().maximize();
+            driver.get("https://www.camelcamelcamel.com/");
 
 
             //driver.navigate().to("https://www.ebay.com");
@@ -277,9 +279,10 @@ public class AmazonPriceTrack {
             //driver.quit();
             e.printStackTrace();
         }
-        driver.close();
+
         System.out.println("priceChartHref " + output[0]);
         System.out.println("salesRank "+ output[1]);
+        if (driver!=null) driver.close();
 
 
 

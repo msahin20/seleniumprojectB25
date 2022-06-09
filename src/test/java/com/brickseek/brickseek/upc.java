@@ -78,6 +78,7 @@ public class upc {
  public  static String[] upcFind2 (String itemLink) throws InterruptedException {
 
   String [] output = new String[2];
+  WebDriver driverObj =null;
   try {
 
 
@@ -85,7 +86,7 @@ public class upc {
 
    WebDriverManager.firefoxdriver().setup();
 
-   WebDriver driverObj = new FirefoxDriver();
+   driverObj = new FirefoxDriver();
    driverObj.manage().window().maximize();
    driverObj.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 //   driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -95,7 +96,7 @@ public class upc {
 
    //driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
    String updatedUrl = driverObj.findElement(By.xpath("//*[@id=\"main\"]/div/div[1]/div[2]/div[3]/div/a[2]")).getAttribute("href");
-   driverObj.quit();
+   driverObj.close();
    //System.out.println(updatedUrl);
 //   driverObj = new ChromeDriver();
 //   //driverObj.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -129,8 +130,14 @@ public class upc {
    output[0] = "N/A";
    output[1] = "N/A";
    e.printStackTrace();
+   if (driverObj!=null){
+    driverObj.close();
+   }
   }
   System.out.println(output[0]);
+  if (driverObj!=null){
+   driverObj.quit();
+  }
 
 
 

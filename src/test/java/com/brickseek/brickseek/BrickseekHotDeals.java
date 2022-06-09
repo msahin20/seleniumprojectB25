@@ -378,6 +378,8 @@ public class BrickseekHotDeals {
 
             }
 
+            Driver.closeDriver();
+
 
             for (int i1 = 0; i1<itemLinks.size(); i1++) {
 
@@ -411,6 +413,45 @@ public class BrickseekHotDeals {
                 }
 
             }
+
+
+            for (int i1 = 0; i1<itemLinks.size(); i1++) {
+
+                if(!(upcLists.get(i1).equals("N/A"))){
+                    continue;
+                }else {
+
+
+                    //adding upc
+                    //upcFind("https://brickseek.com/deal/swift-home-microfiber-solid-sheet/585259");
+                    //upcFind("https://brickseek.com/deal/fossil-women-s-42mm-charter-stainless/585280");
+
+
+                    String upcHref = itemLinks.get(i1);
+
+                    //upcFind(upcHref);
+
+//                try {
+
+                    String[] arrayStr = upc.upcFind(upcHref);
+                    upcLists.set(i1, arrayStr[0]);
+                    rankList.set(i1,arrayStr[1]);
+                    Thread.sleep(30000);
+//                }catch (RuntimeException e) {
+//                    upcLists.add("N/A");
+//                    rankList.add("N/A");
+//                    Driver.closeDriver();
+//                    e.printStackTrace();
+//                }
+
+                    //driver.quit();
+                }
+
+            }
+
+            Driver.closeDriver();
+
+
 
 
             //System.out.println("upcs");
@@ -485,7 +526,7 @@ public class BrickseekHotDeals {
                     System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
                     String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
                     String priceChartHref2 = strArr2[0];
-                    eachMap.put("Upc", priceChartHref2);
+                    eachMap.put("AmazonPriceChart", priceChartHref2);
                     amazonPriceChartList.set(y, priceChartHref2);
 
 
