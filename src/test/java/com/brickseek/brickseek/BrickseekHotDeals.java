@@ -249,7 +249,7 @@ public class BrickseekHotDeals {
     public static void main(String[] args) throws InterruptedException {
         int waitTime = 10;
         int nPages = 5;
-        int pagesToSkip = 1;
+        int pagesToSkip = 0;
         int percentCriteria = 59;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
@@ -527,14 +527,17 @@ public class BrickseekHotDeals {
             y = 0;
             for (Map<String, String> eachMap : mapList) {
 
-                if (eachMap.get("AmazonPriceChart").equals("N/A")) {
-                    System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
-                    String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
-                    String priceChartHref2 = strArr2[0];
-                    eachMap.put("AmazonPriceChart", priceChartHref2);
-                    amazonPriceChartList.set(y, priceChartHref2);
+                if(eachMap.get("AmazonPriceChart")!=null) {
+                    if (eachMap.get("AmazonPriceChart").equals("N/A")) {
+                        System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
+                        String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
+                        String priceChartHref2 = strArr2[0];
+                        eachMap.put("AmazonPriceChart", priceChartHref2);
+                        amazonPriceChartList.set(y, priceChartHref2);
 
 
+                    }
+                    else System.out.println("eachMap.get(\"AmazonPriceChart\") WHY IT WAS NULL= " + eachMap.get("AmazonPriceChart"));
                 }
 
 

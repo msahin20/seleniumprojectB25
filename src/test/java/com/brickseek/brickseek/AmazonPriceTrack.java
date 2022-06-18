@@ -270,6 +270,7 @@ public class AmazonPriceTrack {
                 //System.out.println("salesRank "+ output[1]);
                 //driver.quit();
             } catch (RuntimeException e){
+
                 e.printStackTrace();
             }
 
