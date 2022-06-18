@@ -505,8 +505,9 @@ public class BrickseekHotDeals {
             }
             int y = 0;
             for (Map<String, String> eachMap : mapList) {
+                if(eachMap.get("AmazonPriceChart")!=null) {
 
-                    if (eachMap.get("AmazonPriceChart").equals("N/A")&&(!eachMap.get("Upc").equals("N/A"))) {
+                    if (eachMap.get("AmazonPriceChart").equals("N/A") && (!eachMap.get("Upc").equals("N/A"))) {
                         System.out.println("eachMap.get(\"Upc\")  = " + eachMap.get("Upc"));
                         String[] strArr2 = AmazonPriceTrack.priceChart3(eachMap.get("Upc"));
                         String priceChartHref2 = strArr2[0];
@@ -516,8 +517,8 @@ public class BrickseekHotDeals {
                         amazonPriceChartList.set(y, priceChartHref2);
 
 
-
                     }
+                }
 
 
 
@@ -567,6 +568,7 @@ public class BrickseekHotDeals {
                 y++;
 
             }
+            y=0;
 
 
 
