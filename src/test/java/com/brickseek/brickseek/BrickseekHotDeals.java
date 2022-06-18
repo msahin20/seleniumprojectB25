@@ -549,14 +549,17 @@ public class BrickseekHotDeals {
             y = 0;
             for (Map<String, String> eachMap : mapList) {
 
-                if (eachMap.get("AmazonPriceChart").equals("N/A")) {
-                    System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
-                    String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
-                    String priceChartHref2 = strArr2[0];
-                    eachMap.put("Upc", priceChartHref2);
-                    amazonPriceChartList.set(y, priceChartHref2);
+                if(eachMap.get("AmazonPriceChart")!=null) {
+
+                    if (eachMap.get("AmazonPriceChart").equals("N/A")) {
+                        System.out.println("eachMap.get(\"Upc\") = " + eachMap.get("Upc"));
+                        String[] strArr2 = AmazonPriceTrack.priceChart2(eachMap.get("Upc"));
+                        String priceChartHref2 = strArr2[0];
+                        eachMap.put("Upc", priceChartHref2);
+                        amazonPriceChartList.set(y, priceChartHref2);
 
 
+                    }
                 }
 
 
