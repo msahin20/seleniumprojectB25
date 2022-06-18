@@ -250,7 +250,7 @@ public class BrickseekHotDeals {
         int waitTime = 10;
         int nPages = 2;
         int pagesToSkip = 0;
-        int percentCriteria = 80;
+        int percentCriteria = 70;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -418,6 +418,7 @@ public class BrickseekHotDeals {
                 }
 
             }
+            Driver.closeDriver();
 
 
             for (int i1 = 0; i1<itemLinks.size(); i1++) {
@@ -465,21 +466,26 @@ public class BrickseekHotDeals {
             //System.out.println("______________");
 
             for (int i3 = 0; i3 < upcLists.size(); i3++) {
-                String upcString = upcLists.get(i3);
+                if ((upcLists.get(i3).equals("N/A"))) {
+                    continue;
+                } else {
+                    String upcString = upcLists.get(i3);
 //                String ePrice = AmazonPriceTrack.amazonPrice(upcString);
 //                amazonPriceList.add(ePrice);
 
-                //adding also PriceChart
-                String [] strArr = AmazonPriceTrack.priceChart2(upcString);
-                String priceChartHref = strArr[0];
-                amazonPriceChartList.add(priceChartHref);
+                    //adding also PriceChart
+                    String[] strArr = AmazonPriceTrack.priceChart2(upcString);
+                    String priceChartHref = strArr[0];
+                    amazonPriceChartList.add(priceChartHref);
 
-                //adding also salesRank in Category
-                String salesRank = strArr[1];
-                salesRankList.add(salesRank);
+                    //adding also salesRank in Category
+                    String salesRank = strArr[1];
+                    salesRankList.add(salesRank);
 
 
+                }
             }
+                Driver.closeDriver();
 
             for (int i2 = 0; i2 < upcLists.size(); i2++) {
 
@@ -489,6 +495,7 @@ public class BrickseekHotDeals {
 
 
             }
+            Driver.closeDriver();
             List<Map<String, String>> mapList = new ArrayList<>();
             for (int j1 = 0; j1 < itemLinks.size(); j1++) {
                 Map<String, String> map = new LinkedHashMap<>();
@@ -506,6 +513,8 @@ public class BrickseekHotDeals {
             }
             int y = 0;
             for (Map<String, String> eachMap : mapList) {
+
+
                 if(eachMap.get("AmazonPriceChart")!=null) {
 
                     if (eachMap.get("AmazonPriceChart").equals("N/A") && (!eachMap.get("Upc").equals("N/A"))) {
@@ -547,6 +556,7 @@ public class BrickseekHotDeals {
                 y++;
 
             }
+            Driver.closeDriver();
 
             y = 0;
             for (Map<String, String> eachMap : mapList) {
@@ -569,6 +579,7 @@ public class BrickseekHotDeals {
                 y++;
 
             }
+            Driver.closeDriver();
             y=0;
 
 
@@ -626,8 +637,12 @@ try {
     Driver.getDriver().findElement(By.xpath("//input[@class='q_T y_Z2hYGcu je_0 jb_0 X_0 N_fq7 G_e A_6EqO C_Z281SGl ir_0 P_0 bj3_Z281SGl b_0 j_n d_72FG em_N']")).sendKeys("deal page" + k);
 
     Driver.getDriver().findElement(By.xpath("//button[.='Send']")).click();
+    System.out.println("Email was successfully sent!!!!!!!!!!!!!!!");
     Driver.closeDriver();
 } catch (RuntimeException e){
+    System.out.println("Email COULD NOT BE SENT");
+
+    Driver.closeDriver();
     System.out.println("mapList = " + mapList);
     e.printStackTrace();
 }
