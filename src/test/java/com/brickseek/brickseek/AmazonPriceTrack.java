@@ -262,9 +262,9 @@ public class AmazonPriceTrack {
                 WebElement priceChart = driver.findElement(By.xpath("//img[@id='summary_chart']"));
                 priceChartHref = priceChart.getAttribute("src");
                 output[0]=priceChartHref;
-                salesRank = driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[1]")).getText() + ": "
-                        + driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[2]")).getText()
-                        + " in "+ driver.findElement(By.xpath("//table[@class='product_fields']//tr[2]//td[2]")).getText();
+//                salesRank = driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[1]")).getText() + ": "
+//                        + driver.findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[2]")).getText()
+//                        + " in "+ driver.findElement(By.xpath("//table[@class='product_fields']//tr[2]//td[2]")).getText();
                 output[1]= salesRank;
                 //System.out.println("priceChartHref " + output[0]);
                 //System.out.println("salesRank "+ output[1]);
