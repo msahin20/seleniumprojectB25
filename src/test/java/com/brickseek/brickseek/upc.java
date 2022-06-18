@@ -136,7 +136,7 @@ public class upc {
   }
   System.out.println(output[0]);
   if (driverObj!=null){
-   driverObj.quit();
+   driverObj.close();
   }
 
 
