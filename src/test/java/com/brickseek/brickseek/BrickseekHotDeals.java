@@ -250,7 +250,7 @@ public class BrickseekHotDeals {
         int waitTime = 10;
         int nPages = 2;
         int pagesToSkip = 0;
-        int percentCriteria = 79;
+        int percentCriteria = 80;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
@@ -437,11 +437,12 @@ public class BrickseekHotDeals {
                     //upcFind(upcHref);
 
 //                try {
+                    Thread.sleep(30000);
 
                     String[] arrayStr = upc.upcFind(upcHref);
                     upcLists.set(i1, arrayStr[0]);
                     rankList.set(i1,arrayStr[1]);
-                    Thread.sleep(30000);
+
 //                }catch (RuntimeException e) {
 //                    upcLists.add("N/A");
 //                    rankList.add("N/A");

@@ -192,27 +192,27 @@ public class AmazonPriceTrack {
             } catch (RuntimeException e){
                 e.printStackTrace();
             }
-            try {
-                WebElement firstImage = Driver.getDriver().findElement(By.xpath("//img[1]"));
-                firstImage.click();
-                WebElement priceChart = Driver.getDriver().findElement(By.xpath("//img[@id='summary_chart']"));
-                priceChartHref = priceChart.getAttribute("src");
-                output[0]=priceChartHref;
-                salesRank = Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[1]")).getText() + ": "
-                        + Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[2]")).getText()
-                        + " in "+ Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[2]//td[2]")).getText();
-                output[1]= salesRank;
-                //System.out.println("priceChartHref " + output[0]);
-                //System.out.println("salesRank "+ output[1]);
-
-
-            }catch (RuntimeException e){
-                e.printStackTrace();
-            }
+//            try {
+//                WebElement firstImage = Driver.getDriver().findElement(By.xpath("//img[1]"));
+//                firstImage.click();
+//                WebElement priceChart = Driver.getDriver().findElement(By.xpath("//img[@id='summary_chart']"));
+//                priceChartHref = priceChart.getAttribute("src");
+//                output[0]=priceChartHref;
+//                salesRank = Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[1]")).getText() + ": "
+//                        + Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[10]//td[2]")).getText()
+//                        + " in "+ Driver.getDriver().findElement(By.xpath("//table[@class='product_fields']//tr[2]//td[2]")).getText();
+//                output[1]= salesRank;
+//                //System.out.println("priceChartHref " + output[0]);
+//                //System.out.println("salesRank "+ output[1]);
+//
+//
+//            }catch (RuntimeException e){
+//                e.printStackTrace();
+//            }
 
 
         }
-        catch(RuntimeException e) {
+        catch(Exception e) {
             //driver.quit();
             e.printStackTrace();
         }
