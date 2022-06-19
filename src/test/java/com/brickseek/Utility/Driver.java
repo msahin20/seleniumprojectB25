@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 
 import java.util.HashMap;
@@ -84,8 +85,8 @@ public class Driver {
                     break;
 
                 case "edge":
-                    WebDriverManager.edgedriver().setup();
-                    driver = new EdgeDriver();
+                    WebDriverManager.iedriver().setup();
+                    driver = new InternetExplorerDriver();
                     driver.manage().window().maximize();
                     //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                     break;
