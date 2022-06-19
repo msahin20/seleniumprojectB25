@@ -283,7 +283,7 @@ public class AmazonPriceTrack {
 
         System.out.println("priceChartHref " + output[0]);
         System.out.println("salesRank "+ output[1]);
-        if (driver!=null) driver.close();
+        if (Driver.getDriver()!=null) Driver.closeDriver();
 
 
 
