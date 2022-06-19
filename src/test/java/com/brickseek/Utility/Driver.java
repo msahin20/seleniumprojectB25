@@ -85,8 +85,8 @@ public class Driver {
                     break;
 
                 case "edge":
-                    WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
+                    WebDriverManager.edgedriver().setup();
+                    driver = new EdgeDriver();
                     driver.manage().window().maximize();
                     //driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
                     break;
