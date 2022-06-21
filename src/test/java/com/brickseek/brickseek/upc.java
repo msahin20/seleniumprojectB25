@@ -135,8 +135,12 @@ public class upc {
    }
   }
   System.out.println(output[0]);
+  try{
   if (driverObj!=null){
    driverObj.close();
+  }
+  } catch (RuntimeException e){
+   e.printStackTrace();
   }
 
 
