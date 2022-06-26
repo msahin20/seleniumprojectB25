@@ -19,16 +19,19 @@ public class BrickseekHotDeals {
 
 
     public static void main(String[] args) throws InterruptedException {
+
+
         int waitTime = 10;
-        int nPages = 4;
+        int nPages = 3;
         int pagesToSkip = 0;
-        int percentCriteria = 59;
+        int percentCriteria = 74;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
+        String onlinePageWalmart = "https://brickseek.com/deals/?sort=newest&type=online&store_types%5B0%5D=3";
         String storePage = "https://brickseek.com/deals/?sort=newest&type=in-store&pg=3";
         String selectedCategoryPage="https://brickseek.com/deals/?sort=newest&categories%5B0%5D=3&categories%5B1%5D=4&categories%5B2%5D=7&categories%5B3%5D=15&categories%5B4%5D=5&categories%5B5%5D=9&categories%5B6%5D=10&categories%5B7%5D=8&categories%5B8%5D=13&categories%5B9%5D=14&categories%5B10%5D=16&categories%5B11%5D=17&categories%5B12%5D=18&categories%5B13%5D=19";
         String selectedCategoryPage2="https://brickseek.com/deals/?sort=newest&categories%5B0%5D=3&categories%5B1%5D=4&categories%5B2%5D=7&categories%5B3%5D=15&categories%5B4%5D=5&categories%5B5%5D=9&categories%5B6%5D=10&categories%5B7%5D=8&categories%5B8%5D=13&categories%5B9%5D=14&categories%5B10%5D=16&categories%5B11%5D=17&categories%5B12%5D=18&categories%5B13%5D=19&pg=2";
-        String toPage = onlinePageNewest;
+        String toPage = selectedCategoryPage2;
         ArrayList<String> itemLinks = new ArrayList<>();
         ArrayList<String> percentTexts = new ArrayList<>();
         ArrayList<String> upcLists = new ArrayList<>();
@@ -94,6 +97,15 @@ public class BrickseekHotDeals {
 
                 int intPercent = Integer.parseInt(each.getText().substring(0, each.getText().indexOf('%')));
                 String hReflink = "";
+
+                try {
+                    if (percentTexts.get(i).equals(percentTexts.get(i - 1)) & pricesList.get(i).equals( pricesList.get(i - 1))) {
+                        System.out.println("Same deal was here!!!!!!!!!");
+                        continue;
+                    }
+                }catch (RuntimeException e){
+                    e.printStackTrace();
+                }
 
 
 
