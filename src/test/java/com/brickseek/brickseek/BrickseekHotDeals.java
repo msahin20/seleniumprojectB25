@@ -24,7 +24,7 @@ public class BrickseekHotDeals {
         int waitTime = 10;
         int nPages = 3;
         int pagesToSkip = 0;
-        int percentCriteria = 74;
+        int percentCriteria = 69;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String onlinePageWalmart = "https://brickseek.com/deals/?sort=newest&type=online&store_types%5B0%5D=3";
@@ -281,20 +281,31 @@ public class BrickseekHotDeals {
             }
             Driver.closeDriver();
             List<Map<String, String>> mapList = new ArrayList<>();
+
+
+
+
             for (int j1 = 0; j1 < itemLinks.size(); j1++) {
-                Map<String, String> map = new LinkedHashMap<>();
-                map.put("ItemLink", itemLinks.get(j1));
-                map.put("PercentOff", percentTexts.get(j1));
-                map.put("Upc", upcLists.get(j1));
-                map.put("Price", pricesList.get(j1));
-                map.put("Ranking", rankList.get(j1));
-                map.put("SalesRank", salesRankList.get(j1));
-                map.put("EbayAvePrice", (ebayPricesList.get(j1).toString()));
-                map.put("AmazonPriceChart", amazonPriceChartList.get(j1));
+                try {
+                    Map<String, String> map = new LinkedHashMap<>();
+                    map.put("ItemLink", itemLinks.get(j1));
+                    map.put("PercentOff", percentTexts.get(j1));
+                    map.put("Upc", upcLists.get(j1));
+                    map.put("Price", pricesList.get(j1));
+                    map.put("Ranking", rankList.get(j1));
+                    map.put("SalesRank", salesRankList.get(j1));
+                    map.put("EbayAvePrice", (ebayPricesList.get(j1).toString()));
+                    map.put("AmazonPriceChart", amazonPriceChartList.get(j1));
 
 
-                mapList.add(map);
+                    mapList.add(map);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
             }
+
+
+
             int y = 0;
             for (Map<String, String> eachMap : mapList) {
 
