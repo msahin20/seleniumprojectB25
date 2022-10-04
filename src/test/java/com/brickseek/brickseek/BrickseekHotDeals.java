@@ -22,9 +22,9 @@ public class BrickseekHotDeals {
 
 
         int waitTime = 10;
-        int nPages = 7;
+        int nPages = 2;
         int pagesToSkip = 0;
-        int percentCriteria = 65;
+        int percentCriteria = 79;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
         String onlinePageBestbuy = "https://brickseek.com/deals/?sort=newest&store_types%5B0%5D=12";
         String onlinePageWalmart = "https://brickseek.com/deals/?sort=newest&type=online&store_types%5B0%5D=3";
@@ -80,7 +80,7 @@ public class BrickseekHotDeals {
             //finding deals items percents only
             List<WebElement> dealsList = Driver.getDriver().findElements(By.xpath("//div[@class='item-list__discount-meter-bar-fill-text']"));
             //finding deals View items
-            List<WebElement> dealsListClickable = Driver.getDriver().findElements(By.xpath("//a[.='View deal']"));
+            List<WebElement> dealsListClickable = Driver.getDriver().findElements(By.xpath("//a[contains(text(),'View deal')]"));
 
             List<WebElement> dealsPrices = Driver.getDriver().findElements(By.xpath("//div[@class='item-list__discount-meter-bar-fill-text']/../../../..//div//div[contains(@class, 'price-column item')]"));
 
@@ -98,14 +98,14 @@ public class BrickseekHotDeals {
                 int intPercent = Integer.parseInt(each.getText().substring(0, each.getText().indexOf('%')));
                 String hReflink = "";
 
-                try {
-                    if (percentTexts.get(i).equals(percentTexts.get(i - 1)) & pricesList.get(i).equals( pricesList.get(i - 1))) {
-                        System.out.println("Same deal was here!!!!!!!!!");
-                        continue;
-                    }
-                }catch (RuntimeException e){
-                    e.printStackTrace();
-                }
+//                try {
+//                    if (percentTexts.get(i).equals(percentTexts.get(i - 1)) & pricesList.get(i).equals( pricesList.get(i - 1))) {
+//                        System.out.println("Same deal was here!!!!!!!!!");
+//                        continue;
+//                    }
+//                }catch (RuntimeException e){
+//                    e.printStackTrace();
+//                }
 
 
 
