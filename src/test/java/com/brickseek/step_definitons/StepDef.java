@@ -5,14 +5,14 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 public class StepDef {
-    static {
-        String [] arg = {"1"};
-        try {
-            BrickseekHotDeals.main(arg);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    static {
+//        String [] arg = {"1"};
+//        try {
+//            BrickseekHotDeals.main(arg);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Given("it starts")
     public void it_starts() {
@@ -26,6 +26,7 @@ public class StepDef {
         for (int i = 0; i <2 ; i++) {
             System.out.println("Hello: " + i);
             Thread.sleep(1500);
+            BrickseekHotDeals.main2();
 
 
         }

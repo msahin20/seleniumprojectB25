@@ -16,9 +16,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class BrickseekHotDeals {
-
-
     public static void main(String[] args) throws InterruptedException {
+        main2();
+    }
+
+
+    public static void main2() throws InterruptedException {
 
 
         int waitTime = 10;
