@@ -22,7 +22,7 @@ public class BrickseekHotDeals {
 
 
         int waitTime = 10;
-        int nPages = 2;
+        int nPages = 1;
         int pagesToSkip = 0;
         int percentCriteria = 85;
         String onlinePageNewest = "https://brickseek.com/deals?sort=newest";
