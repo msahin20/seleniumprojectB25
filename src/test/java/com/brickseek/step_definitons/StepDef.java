@@ -14,10 +14,10 @@ public class StepDef {
 //        }
 //    }
 
-    @Given("it starts")
-    public void it_starts() {
-        System.out.println("Test Started");
-    }
+//    @Given("it starts")
+//    public void it_starts() {
+//        System.out.println("Test Started");
+//    }
 
 
 
